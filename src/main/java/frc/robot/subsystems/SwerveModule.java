@@ -6,15 +6,14 @@ import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.ModuleConstants;
+import frc.robot.subsystems.constants.SwerveConstants;
 
 
 public class SwerveModule {
@@ -25,7 +24,7 @@ public class SwerveModule {
     private final RelativeEncoder driveEncoder;
     private final RelativeEncoder turningEncoder;
 
-    private final SparkMaxPIDController turningPidController;
+    private final SparkPIDController turningPidController;
 
     private CANcoder absoluteEncoder;
     private final boolean absoluteEncoderReversed;
@@ -128,7 +127,7 @@ public class SwerveModule {
             return;
         }
         state = SwerveModuleState.optimize(state, getState().angle); // makes it so we can reverse the wheels instead of spinning 180
-        driveMotor.set(state.speedMetersPerSecond / DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
+        driveMotor.set(state.speedMetersPerSecond / SwerveConstants.kPhysicalMaxSpeedMetersPerSecond);
         turningMotor.getPIDController().setReference(state.angle.getRadians(), CANSparkMax.ControlType.kPosition);
         // turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
     }
