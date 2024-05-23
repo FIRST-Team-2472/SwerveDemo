@@ -5,6 +5,7 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -40,7 +41,7 @@ public class SwerveModule {
         config.MagnetSensor.MagnetOffset = -absoluteEncoderoffset;
         absoluteEncoder.getConfigurator().apply(config);
 
-        driveMotor = new CANSparkMax(driveMotorId, MotorType.kBrushless);
+        driveMotor = new CANSparkMax(driveMotorId, CANSparkLowLevel.MotorType);
         turningMotor = new CANSparkMax(turningMotorId, MotorType.kBrushless);
 
         driveMotor.restoreFactoryDefaults();
