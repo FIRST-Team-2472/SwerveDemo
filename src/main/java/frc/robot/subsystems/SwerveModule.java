@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+
 import frc.robot.subsystems.constants.SwerveConstants;
 
 public class SwerveModule {
@@ -26,8 +27,8 @@ public class SwerveModule {
     private final SparkPIDController turningPidController;
 
     private CANcoder absoluteEncoder;
+
     private final boolean absoluteEncoderReversed;
-    private final double absoluteEncoderOffset;
 
     public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed,
             int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
@@ -35,7 +36,6 @@ public class SwerveModule {
         // this is the offset on the absolute encoder as the magnets arent always facing
         // the same way
         // we are just storing the number in a global variable here
-        this.absoluteEncoderOffset = absoluteEncoderOffset;
         // this is whether or not the encoder is reversed
         this.absoluteEncoderReversed = absoluteEncoderReversed;
 
@@ -76,6 +76,8 @@ public class SwerveModule {
         // this is how the motor angle is controlled
         // PID's control it smoothly, currently we only use P but we can add I and D if
         // needed
+        // also this code is just grabbbing the PID controller from the motor and changing
+        // ours to become it we have to do this now bc now the motor has been initialized
         turningPidController = turningMotor.getPIDController();
         // P sets the power based on how far we are off of the target
         // the further away the more power
